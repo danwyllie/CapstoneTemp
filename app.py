@@ -37,7 +37,7 @@ def index():
                     'Sunrise' : ConvertedSunrise,
                     'Sunset' : ConvertedSunset,
                 }
-                print("\nweatherData :")
+                print("\nSelected 'weatherData' :")
                 print(weatherData)
             if r['cod']==(404):
                 print("City not found!")
