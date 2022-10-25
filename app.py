@@ -1,6 +1,11 @@
 from flask import Flask, request, render_template
 import requests
 import datetime
+from os import environ 
+
+API_KEY = environ.get('API_KEY')
+print("\nAPI_KEY:")
+print(API_KEY)
 
 app = Flask(__name__)
   
@@ -12,13 +17,17 @@ def index():
     if request.method == "POST":       
         cityName = request.form.get("cityName")  
         if cityName:
-            weatherApiKey = '21e4c7371396d617e2c79a86021070c9'
-            url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+weatherApiKey+"&units=metric"
+            #weatherApiKey = '21e4c7371396d617e2c79a86021070c9'
+            #url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+weatherApiKey+"&units=metric"
+            url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+API_KEY+"&units=metric"
             r = requests.get(url).json()
 
+            print("\nAPI response:")
             print(r['cod'])
 
             if r['cod']==(200):
+                print("\nRunning API query against URL:")
+                print(url)
                 print("\nopenweathermap API output :")
                 print(r)
                 SunriseTime = datetime.datetime.fromtimestamp(r['sys']['sunrise'])
@@ -37,7 +46,7 @@ def index():
                     'Sunrise' : ConvertedSunrise,
                     'Sunset' : ConvertedSunset,
                 }
-                print("\nSelected 'weatherData' :")
+                print("\nIsolated 'weatherData' being used:")
                 print(weatherData)
             if r['cod']==(404):
                 print("City not found!")
