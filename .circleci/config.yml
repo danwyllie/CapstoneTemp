@@ -3,7 +3,7 @@ jobs:
   build-lint:
     docker:
       # Use the same Docker base as the project
-      - image: python:3.7.3-stretch
+      - image: circleci/python:3.6.7-stretch
     steps:
       - checkout
       
