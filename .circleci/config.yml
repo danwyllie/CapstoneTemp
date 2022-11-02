@@ -30,17 +30,18 @@ jobs:
   
   docker-build-upload:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/go:1.17
+      #- image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: "Docker Build-Login-Upload"
           command: |
-            echo "== Build docker image locally =="
-            docker build --tag=udacitycapstone .
             echo "== Login to docker with envirvonment variables =="
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            echo "== Build docker image =="
+            docker build --tag=udacitycapstone .
             echo "== Tag docker image for upload =="
             docker tag udacitycapstone $DOCKERHUB_USERNAME/udacitycapstone
             echo "== Upload docker image =="
