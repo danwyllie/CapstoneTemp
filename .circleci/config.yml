@@ -4,7 +4,7 @@ jobs:
     docker:
       # Use the same Docker base as the project
       - image: python:3.6.1-alpine
-
+      - checkout
       - run:
           name: "Install dependencies"
           command: |
