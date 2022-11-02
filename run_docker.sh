@@ -12,4 +12,4 @@ docker image ls --filter=reference='capstonetemp'
 
 # Step 3: 
 # Run flask app
-docker run -p 5000:5000 capstonetemp
+docker run -p 5000:5000 capstonetemps
