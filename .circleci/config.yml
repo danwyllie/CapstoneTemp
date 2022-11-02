@@ -10,7 +10,7 @@ jobs:
       - run:
           name: "Setup and Install dependencies"
           command: |
-            python3 -m venv venvs
+            python3 -m venv venv
             . venv/bin/activate
             echo "== Setup required .env file =="
             touch .env
