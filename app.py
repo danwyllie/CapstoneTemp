@@ -20,7 +20,7 @@ def index():
             #weatherApiKey = '21e4c7371396d617e2c79a86021070c9'
             #url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+weatherApiKey+"&units=metric"
             url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+API_KEY+"&units=metric"
-            r = requests.get(url).json()
+            r = requests.get(url, timeout=30).json()
 
             print("\nAPI response:")
             print(r['cod'])
