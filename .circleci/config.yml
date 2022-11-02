@@ -1,0 +1,50 @@
+version: 2.1
+jobs:
+  build-lint:
+    docker:
+      # Use the same Docker base as the project
+      - image: python:3.6.1-alpine
+
+      - run:
+          name: "Install dependencies"
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install
+            echo "== Download hadolint =="
+            echo "== Downloading hadolint =="
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+            chmod +x /bin/hadolint
+            echo "== Checking for hadolint =="
+            hadolint -v
+
+      - run:
+          name: "Run lint"
+          command: |
+            . venv/bin/activate
+            make lint
+  
+  docker-build-upload:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: "Docker Build-Login-Upload"
+          command: |
+            echo "== Build docker image locally =="
+            docker build --tag=udacitycapstone .
+            echo "== Login to docker with envirvonment variables =="
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            echo "== Tag docker image for upload =="
+            docker tag udacitycapstone $DOCKERHUB_USERNAME/udacitycapstone
+            echo "== Upload docker image =="
+            docker push $DOCKERHUB_USERNAME/udacitycapstone
+
+workflows:
+  default:
+    jobs:
+      - build-lint
+      - docker-build-upload:
+          requires: [build-lint]
