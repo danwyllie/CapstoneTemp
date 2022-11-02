@@ -2,7 +2,6 @@ version: 2.1
 jobs:
   build-lint:
     docker:
-      # Use the same Docker base as the project
       - image: circleci/python:3.7.3-stretch
     steps:
       - checkout
@@ -40,7 +39,6 @@ jobs:
   docker-build-upload:
     docker:
       - image: cimg/go:1.17
-      #- image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker
@@ -60,5 +58,5 @@ workflows:
   default:
     jobs:
       - build-lint
-      #- docker-build-upload:
-      #    requires: [build-lint]
+      - docker-build-upload:
+          requires: [build-lint]
