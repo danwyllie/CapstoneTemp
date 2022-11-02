@@ -45,6 +45,13 @@ jobs:
       - run:
           name: "Docker Build-Login-Upload"
           command: |
+            echo "== Setup required .env file =="
+            touch .env
+            echo "#.env" >> ".env"
+            echo FLASK_APP=app.py >> ".env"
+            echo FLASK_DEBUG=True >> ".env"
+            echo API_KEY=$API_KEY >> ".env"
+            echo "== Sanity check of .env file =="          
             echo "== Login to docker with envirvonment variables =="
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             echo "== Build docker image =="
