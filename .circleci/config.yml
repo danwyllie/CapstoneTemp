@@ -8,10 +8,19 @@ jobs:
       - checkout
 
       - run:
-          name: "Install dependencies"
+          name: "Setup and Install dependencies"
           command: |
-            python3 -m venv venv
+            python3 -m venv venvs
             . venv/bin/activate
+            echo "== Setup required .env file =="
+            touch .env
+            echo "#.env" >> ".env"
+            echo FLASK_APP=app.py >> ".env"
+            echo FLASK_DEBUG=True >> ".env"
+            echo API_KEY=$API_KEY >> ".env"
+            echo "== Sanity check of .env file =="
+            cat .env
+            echo "== Run make =="
             make install
             echo "== Download hadolint =="
             sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
@@ -51,5 +60,5 @@ workflows:
   default:
     jobs:
       - build-lint
-      - docker-build-upload:
-          requires: [build-lint]
+      #- docker-build-upload:
+      #    requires: [build-lint]
