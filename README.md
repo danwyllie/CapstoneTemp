@@ -7,3 +7,4 @@ Udacity Capstone Project
 4.  Created a new GitHub repo ## NAME & URL TBC ## and created all the files required
 5.  Created a Makefile and performed tests
 6.  Created a Dockerfile and run_docker.sh file to test locally
+7.  Started creating CircleCI pipeline
