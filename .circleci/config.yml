@@ -70,7 +70,7 @@ jobs:
           name: "Install tar & gzip packages"
           command: yum install -y tar gzip
       - run:
-          name: "Testing commands"
+          name: "Testing aws commands"
           command: |
             echo "== List eks clusters =="
             aws eks list-clusters
