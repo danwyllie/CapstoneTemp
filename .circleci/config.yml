@@ -61,9 +61,28 @@ jobs:
             echo "== Upload docker image =="
             docker push $DOCKERHUB_USERNAME/udacitycapstone
 
+  create-eks-cluster:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: "Install tar & gzip packages"
+          command: yum install -y tar gzip
+      - run:
+          name: "Testing commands"
+          command: |
+            echo "== List eks clusters =="
+            aws eks list-clusters
+            echo "== Check eksctl version =="
+            eksctl version
+            echo "== Get clusters =="
+            eksctl get cluster
+
 workflows:
   default:
     jobs:
-      - build-lint
-      - docker-build-upload:
-          requires: [build-lint]
+      #- build-lint
+      #- docker-build-upload:
+      #    requires: [build-lint]
+      - create-eks-cluster
